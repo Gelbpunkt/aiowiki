@@ -16,15 +16,25 @@ class MediaWiki:
 
     def _cleanhtml(self, raw_html):
         """Makes the Mediawiki HTML readable text."""
+
+	#remove html tags
         cleantext = re.sub(r'<.*?>', '', raw_html)
-        cleanr2 = re.compile("<!--.*?-->")
+
+        #remove the html coments
         cleantext = re.sub("(<!--.*?-->)", '', cleantext, flags=re.DOTALL)
+
+	#remove lines with multiple spaces on them, happens after the regexes
         cleantext = "\n".join([r.strip() for r in cleantext.split("\n")])
+
+	#remove multiple newlines which appeared after the regexes
         cleantext = re.sub(r"\n\n+", "\n\n", cleantext)
+
+	#remove the edit things after the headings
         cleantext = cleantext.replace("[edit]", "")
         cleantext = cleantext.replace("(edit)", "")
+
         return cleantext
-    
+
     async def _html(self, pageTitle:str):
         """Helper function that downloads the page HTML."""
         if not self.baseUrl:
@@ -44,16 +54,16 @@ class MediaWiki:
         async with self.session.get(url) as r:
             data = await r.json()
         return data["query"]["pages"][0]["revisions"][0]["content"]
-    
+
     async def get_text(self, pageTitle:str):
         """Get a page content. Either from URL or a page in the URL from the constructer."""
         data = await self._html(pageTitle)
         return self._cleanhtml(data)
-    
+
     async def get_html(self, pageTitle:str):
         """Get the raw page HTML. Either from URL or page in defined wiki."""
         return await self._html(pageTitle)
-    
+
     async def get_markdown(self, pageTitle:str):
         """Get the MediaWiki markdown of a page."""
         return await self._markdown(pageTitle)
