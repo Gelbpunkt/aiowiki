@@ -44,14 +44,7 @@ class MediaWiki:
     
     async def get_text(self, pageTitle:str):
         """Get a page content. Either from URL or a page in the URL from the constructer."""
-
-            
-
-
-
         data = await self._html(pageTitle)
-
-
         return self._cleanhtml(data)
     
     async def get_html(self, pageTitle:str):
@@ -59,4 +52,5 @@ class MediaWiki:
         return await self._html(pageTitle)
     
     async def get_markdown(self, pageTitle:str):
+        """Get the MediaWiki markdown of a page."""
         return await self._markdown(pageTitle)
