@@ -1,6 +1,9 @@
 # async-mediawiki
 An asynchronous python libary to get mediawiki content
 
+# Installation
+`pip3 install --user git+https://github.com/Gelbpunkt/async-mediawiki/`
+
 # Usage
 ```python
 
