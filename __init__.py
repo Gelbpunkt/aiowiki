@@ -1,1 +1,1 @@
-name = "async-mediawiki"
+name = "async_mediawiki"
