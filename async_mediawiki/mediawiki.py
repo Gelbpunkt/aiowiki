@@ -88,6 +88,6 @@ class MediaWiki:
         """Get the MediaWiki markdown of a page."""
         return await self._markdown(pageTitle)
 
-    async def edit_page(self, pageTitle:str, content:str, token="+\\")
+    async def edit_page(self, pageTitle:str, content:str, token="+\\"):
         """Edit a page in the wiki."""
         await _edit(pageTitle, content=content, token=token)
