@@ -3,9 +3,12 @@ import aiohttp, re, asyncio
 
 class MediaWiki:
 
-    def __init__(self, baseUrl=None):
+    def __init__(self, baseUrl=None, session=None):
         self.baseUrl = baseUrl
-        self.session = aiohttp.ClientSession()
+        if not session:
+            self.session = aiohttp.ClientSession()
+        else:
+            self.session = session
 
     async def close(self):
         """Close the connection."""
