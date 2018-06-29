@@ -4,7 +4,7 @@ An asynchronous python libary to get mediawiki content
 # Usage
 ```python
 
-import mediawiki
+import async_mediawiki as mediawiki
 w = mediawiki.MediaWiki("https://en.wikipedia.org/w/api.php")
 print(await w.get_html("Chemistry")) #page html when rendered 
 print(await w.get_markdown("Chemistry")) #markdown, what you see when editing a page
