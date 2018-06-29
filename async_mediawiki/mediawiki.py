@@ -90,4 +90,4 @@ class MediaWiki:
 
     async def edit_page(self, pageTitle:str, content:str, token="+\\"):
         """Edit a page in the wiki."""
-        await _edit(pageTitle, content=content, token=token)
+        await self._edit(pageTitle, content=content, token=token)
