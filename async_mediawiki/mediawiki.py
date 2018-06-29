@@ -72,8 +72,15 @@ class MediaWiki:
         if not self.baseUrl:
             url = pageTitle
         else:
-            url = f"{self.baseUrl}?action=edit&title={pageTitle}&text={content}&token={token}"
-        await self.session.post(url)
+            url = self.baseUrl
+        json = {
+	"action": "edit",
+	"format": "json",
+	"title": pageTitle,
+	"text": content,
+	"token": "+\\"
+        }
+        return await self.session.post(url, json=json)
 
     async def get_text(self, pageTitle:str):
         """Get a page content. Either from URL or a page in the URL from the constructer."""
@@ -90,4 +97,4 @@ class MediaWiki:
 
     async def edit_page(self, pageTitle:str, content:str, token="+\\"):
         """Edit a page in the wiki."""
-        await self._edit(pageTitle, content=content, token=token)
+        return await self._edit(pageTitle, content=content, token=token)
