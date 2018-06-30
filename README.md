@@ -5,7 +5,7 @@ An asynchronous python libary to get mediawiki content
 
 It requires Python 3.5 or above and aiohttp
 
-`pip3 install --user git+https://github.com/Gelbpunkt/async-mediawiki/`
+`pip3 install async-mediawiki`
 
 # Usage
 ```python
