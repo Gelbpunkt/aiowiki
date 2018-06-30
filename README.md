@@ -17,6 +17,10 @@ print(await w.get_markdown("Chemistry")) #markdown, what you see when editing a 
 print(await w.get_text("Chemistry")) #pure text without html and markdown
 await w.close() #close the session
 
+#to edit a page or create it if it doesn't exist
+await w.edit_page("Page Title", "My content", token="my edit token")
+#edit token is anonymous when not specified
+
 #you can also use this
 w = mediawiki.MediaWiki()
 print(await w.get_markdown("https://wiki.guildwars.com/api.php?action=query&titles=Ranger&prop=revisions&rvprop=content&format=json&formatversion=2"))
