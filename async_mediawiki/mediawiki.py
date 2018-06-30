@@ -99,7 +99,6 @@ class MediaWiki:
         """Creates an account in the wiki. May fail if captchas are required."""
         url = url or self.baseUrl
         token = await self._get_token(url, type="createaccount")
-        print(f"Token is {token}")
         json = {
         "action": "createaccount",
         "format": "json",
@@ -108,7 +107,8 @@ class MediaWiki:
         "retype": userPassword,
         "email": userEmail,
         "realname": userRealName,
-        "createtoken": token
+        "createtoken": token,
+        "createcontinue": True
         }
         async with self.session.post(url, data=json) as r:
             return await r.json()
