@@ -9,6 +9,7 @@ class MediaWiki:
             self.session = aiohttp.ClientSession()
         else:
             self.session = session
+        self.loggedIn = False
 
     async def close(self):
         """Close the connection."""
@@ -68,6 +69,8 @@ class MediaWiki:
         """Edits a page."""
         if self.baseUrl and not url:
             url = self.baseUrl
+        if token == "+\\" and self.loggedIn:
+            token = await self._get_token(url, "csrf")
         json = {
 	"action": "edit",
 	"format": "json",
@@ -126,5 +129,6 @@ class MediaWiki:
         "format": "json",
         "lgtoken": token
         }
+        self.loggedIn = True
         async with self.session.post(url, data=json) as r:
             return await r.json()
