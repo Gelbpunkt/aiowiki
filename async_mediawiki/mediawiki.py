@@ -67,11 +67,9 @@ class MediaWiki:
 
         return data["query"]["tokens"]["logintoken"]
 
-    async def _edit(self, pageTitle:str, content:str, token:str):
+    async def _edit(self, pageTitle:str, content:str, token:str, ul=None):
         """Edits a page."""
-        if not self.baseUrl:
-            url = pageTitle
-        else:
+        if self.baseUrl and not url:
             url = self.baseUrl
         json = {
 	"action": "edit",
@@ -80,8 +78,8 @@ class MediaWiki:
 	"text": content,
 	"token": token
         }
-        async with self.session.post(url, json=json) as r:
-            return await r.text()
+        async with self.session.post(url, data=json) as r:
+            return await r.json()
 
     async def get_text(self, pageTitle:str):
         """Get a page content. Either from URL or a page in the URL from the constructer."""
@@ -96,6 +94,6 @@ class MediaWiki:
         """Get the MediaWiki markdown of a page."""
         return await self._markdown(pageTitle)
 
-    async def edit_page(self, pageTitle:str, content:str, token="+\\"):
+    async def edit_page(self, pageTitle:str, content:str, token="+\\", url=None):
         """Edit a page in the wiki."""
-        return await self._edit(pageTitle, content=content, token=token)
+        return await self._edit(pageTitle, content=content, token=token, url=url)
