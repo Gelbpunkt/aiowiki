@@ -105,10 +105,12 @@ class MediaWiki:
         "username": userName,
         "password": userPassword,
         "retype": userPassword,
-        "email": userEmail,
-        "realname": userRealName,
         "createtoken": token,
         "createreturnurl": url
         }
+        if userEmail:
+            json["email"] = userEmail
+        if userRealName:
+            json["realname"] = userRealName
         async with self.session.post(url, data=json) as r:
             return await r.json()
