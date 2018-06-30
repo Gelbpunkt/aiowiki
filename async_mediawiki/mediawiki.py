@@ -78,9 +78,10 @@ class MediaWiki:
 	"format": "json",
 	"title": pageTitle,
 	"text": content,
-	"token": "+\\"
+	"token": token
         }
-        return await self.session.post(url, json=json)
+        async with self.session.post(url, json=json) as r:
+		return await r.text()
 
     async def get_text(self, pageTitle:str):
         """Get a page content. Either from URL or a page in the URL from the constructer."""
