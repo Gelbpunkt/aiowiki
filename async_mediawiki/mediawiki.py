@@ -123,11 +123,13 @@ class MediaWiki:
         url = url or self.baseUrl
         token = await self._get_token(url, type="login")
         json = {
-        "action": "login",
-        "lgname": userName,
-        "lgpassword": userPassword,
+        "action": "clientlogin",
+        "loginreturnurl": url,
+        "username": userName,
+        "password": userPassword,
         "format": "json",
-        "lgtoken": token
+        "rememberMe": 1,
+        "logintoken": token
         }
         self.loggedIn = True
         async with self.session.post(url, data=json) as r:
