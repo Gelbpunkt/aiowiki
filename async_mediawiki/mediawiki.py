@@ -67,7 +67,7 @@ class MediaWiki:
 
         return data["query"]["tokens"]["logintoken"]
 
-    async def _edit(self, pageTitle:str, content:str, token:str, ul=None):
+    async def _edit(self, pageTitle:str, content:str, token:str, url=None):
         """Edits a page."""
         if self.baseUrl and not url:
             url = self.baseUrl
