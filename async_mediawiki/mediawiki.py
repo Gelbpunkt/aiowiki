@@ -55,17 +55,14 @@ class MediaWiki:
             data = await r.json()
         return data["query"]["pages"][0]["revisions"][0]["content"]
 
-    async def _edit_token(self):
-        """Get an API token for editing a page."""
-        pass
 
-    async def _login_token(self, url):
+    async def _get_token(self, url, type="csrf"):
         """Get an API token for a login attempt."""
-        url = f"{url}?action=query&meta=tokens&type=login"
+        url = f"{url}?action=query&meta=tokens&type={type}&format=json"
         async with self.session.get(url) as r:
             data = await r.json()
 
-        return data["query"]["tokens"]["logintoken"]
+        return data["query"]["tokens"][f"{type}token"]
 
     async def _edit(self, pageTitle:str, content:str, token:str, url=None):
         """Edits a page."""
@@ -97,3 +94,19 @@ class MediaWiki:
     async def edit_page(self, pageTitle:str, content:str, token="+\\", url=None):
         """Edit a page in the wiki."""
         return await self._edit(pageTitle, content=content, token=token, url=url)
+
+    async def create_account(self, userName:str, userPassword:str, userEmail=None, userRealName=None, url=None):
+        """Creates an account in the wiki. May fail if captchas are required."""
+        url = url or self.baseUrl
+        token = await self._get_token(url, type="createaccount")
+        json = {
+        "action": "createaccount",
+        "username": userName,
+        "password": userPassword,
+        "retype": userPassword,
+        "email": userEmail,
+        "realname": userRealName,
+        "token": token
+        }
+        async with self.session.post(url, data=json) as r:
+            return await r.json()
