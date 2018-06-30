@@ -108,7 +108,7 @@ class MediaWiki:
         "email": userEmail,
         "realname": userRealName,
         "createtoken": token,
-        "createcontinue": True
+        "createreturnurl": url
         }
         async with self.session.post(url, data=json) as r:
             return await r.json()
