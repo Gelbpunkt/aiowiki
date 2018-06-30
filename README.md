@@ -26,7 +26,7 @@ await w.create_account("username", "password", userEmail="email (optional)", use
 
 #to edit a page or create it if it doesn't exist
 await w.edit_page("Page Title", "My content", token="my edit token")
-#edit token is anonymous when not specified, otherwise as the logged in user
+#edit token is anonymous when not specified, otherwise auto-generated as the logged in user if not given an explicit one
 
 #you can also use this
 w = mediawiki.MediaWiki()
