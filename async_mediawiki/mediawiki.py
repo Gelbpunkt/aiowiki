@@ -114,3 +114,17 @@ class MediaWiki:
             json["realname"] = userRealName
         async with self.session.post(url, data=json) as r:
             return await r.json()
+
+    async def login(self, userName:str, userPassword:str, url=None):
+        """Logs in to the wiki."""
+        url = url or self.baseUrl
+        token = await self._get_token(url, type="login")
+        json = {
+        "action": "login",
+        "lgname": userName,
+        "lgpassword": userPassword,
+        "format": "json",
+        "lgtoken": token
+        }
+        async with self.session.post(url, data=json) as r:
+            return await r.json()
