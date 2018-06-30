@@ -108,9 +108,7 @@ class MediaWiki:
         "retype": userPassword,
         "email": userEmail,
         "realname": userRealName,
-        "token": token
+        "createtoken": token
         }
         async with self.session.post(url, data=json) as r:
-            #debugging
-            return self._cleanhtml(await r.text())
             return await r.json()
