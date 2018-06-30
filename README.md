@@ -18,7 +18,7 @@ text = await w.get_text("Chemistry") #pure text without html and markdown
 await w.close() #close the session
 
 
-#login to the wiki to make changed under a specific user
+#login to the wiki to make changes under a specific user
 await w.login("username", "password")
 
 #create an account
