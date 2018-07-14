@@ -10,7 +10,7 @@ with open('requirements.txt') as f:
 
 setuptools.setup(
     name="async_mediawiki",
-    version="0.0.1",
+    version="0.0.2",
     author="Jens Reidel",
     author_email="jens.reidel@gmail.com",
     description="Async Mediawiki Python libary",
