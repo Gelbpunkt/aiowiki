@@ -56,6 +56,15 @@ class MediaWiki:
             data = await r.json()
         return data["query"]["pages"][0]["revisions"][0]["content"]
 
+    async def _summary(self, pageTitle:str):
+        """Helper function to get page summary."""
+        if not self.baseUrl:
+            url = pageTitle
+        else:
+            url = f"{self.baseUrl}?format=json&action=query&prop=extracts&exintro=&explaintext=&titles={pageTitle}"
+        async with self.session.get(url) as r:
+            data = await r.json()
+        return data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
 
     async def _get_token(self, url, type="csrf"):
         """Get an API token for a login attempt."""
@@ -93,6 +102,10 @@ class MediaWiki:
     async def get_markdown(self, pageTitle:str):
         """Get the MediaWiki markdown of a page."""
         return await self._markdown(pageTitle)
+
+    async def get_summary(self, pageTitle:str):
+        """Get the short content of a page."""
+        return await self._summary(pageTitle)
 
     async def edit_page(self, pageTitle:str, content:str, token="+\\", url=None):
         """Edit a page in the wiki."""
