@@ -15,6 +15,7 @@ w = mediawiki.MediaWiki("https://en.wikipedia.org/w/api.php")
 html = await w.get_html("Chemistry") #page html when rendered 
 md = await w.get_markdown("Chemistry") #markdown, what you see when editing a page
 text = await w.get_text("Chemistry") #pure text without html and markdown
+summary = await w.get_summary("Chemistry") #summary, usually a the first paragraph explaning the page
 await w.close() #close the session
 
 
