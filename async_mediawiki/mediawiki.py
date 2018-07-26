@@ -1,4 +1,5 @@
 import aiohttp, re, asyncio
+from html import unescape
 
 
 class MediaWiki:
@@ -33,7 +34,7 @@ class MediaWiki:
 	#remove the edit things after the headings
         cleantext = cleantext.replace("[edit]", "")
         cleantext = cleantext.replace("(edit)", "")
-
+	
         return cleantext
 
     async def _html(self, pageTitle:str):
@@ -44,7 +45,9 @@ class MediaWiki:
             url = f"{self.baseUrl}?action=parse&page={pageTitle}&format=json"
         async with self.session.get(url) as r:
             data = await r.json()
-        return data["parse"]["text"]["*"]
+	html = data["parse"]["text"]["*"]
+	unescape(html)
+        return html
 
     async def _markdown(self, pageTitle:str):
         """Helper function to get page markdown."""
@@ -54,7 +57,9 @@ class MediaWiki:
             url = f"{self.baseUrl}?action=query&titles={pageTitle}&prop=revisions&rvprop=content&format=json&formatversion=2"
         async with self.session.get(url) as r:
             data = await r.json()
-        return data["query"]["pages"][0]["revisions"][0]["content"]
+	md = data["query"]["pages"][0]["revisions"][0]["content"]
+        unescape(md)
+	return md
 
     async def _summary(self, pageTitle:str):
         """Helper function to get page summary."""
@@ -64,7 +69,9 @@ class MediaWiki:
             url = f"{self.baseUrl}?format=json&action=query&prop=extracts&exintro=&explaintext=&titles={pageTitle}"
         async with self.session.get(url) as r:
             data = await r.json()
-        return data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
+        summary = data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
+	unescape(summary)
+	return summary
 
     async def _get_token(self, url, type="csrf"):
         """Get an API token for a login attempt."""
