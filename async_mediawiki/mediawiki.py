@@ -21,7 +21,7 @@ class MediaWiki:
 	#remove html tags
         cleantext = re.sub(r'<.*?>', '', raw_html)
 
-        #remove the html coments
+        #remove the html comments
         cleantext = re.sub("(<!--.*?-->)", '', cleantext, flags=re.DOTALL)
 
 	#remove lines with multiple spaces on them, happens after the regexes
