@@ -1,6 +1,8 @@
 # async-mediawiki
 An asynchronous python libary to get mediawiki content
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/async-mediawiki?branch=master)](https://bettercodehub.com/)
+
 # Installation
 
 It requires Python 3.6 or above and aiohttp
