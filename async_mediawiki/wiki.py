@@ -32,7 +32,7 @@ class Wiki:
 
     async def create_account(self, username: str, password: str, email: str=None, real_name: str=None):
         """Creates an account in the wiki. May fail if captchas are required."""
-        token = await self._get_token(url, type="createaccount")
+        token = await self._get_token(type="createaccount")
         json = {
         "action": "createaccount",
         "format": "json",
@@ -52,7 +52,7 @@ class Wiki:
 
     async def login(self, username: str, password: str):
         """Logs in to the wiki."""
-        token = await self._get_token(url, type="login")
+        token = await self._get_token(type="login")
         json = {
         "action": "clientlogin",
         "loginreturnurl": self.base_url,

@@ -10,6 +10,9 @@ class Page:
         self.title = page_title
         self.csrf = csrf
 
+    async def __aexit__(self, exception_type, exception_value, traceback):
+        pass
+
     async def _html(self):
         """Helper function that downloads the page HTML."""
         url = f"{self.base_url}?action=parse&page={self.title}&format=json"
