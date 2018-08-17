@@ -25,7 +25,7 @@ class Wiki:
         """Get an API token for a login attempt."""
         url = f"{self.base_url}?action=query&meta=tokens&type={type}&format=json"
 
-        async with self.session.get(self.base_url) as r:
+        async with self.session.get(url) as r:
             data = await r.json()
 
         return data["query"]["tokens"][f"{type}token"]
