@@ -24,4 +24,5 @@ print(await page.markdown) #print the pure page markdown (wiki code)
 print(await page.text) #print the page's text (library handled filtering of the HTML)
 
 await page.edit("That's a nice lib!") #edit the page, automatically uses the logged in user or anonymous
+await wiki.close() #the Wiki object also supports a context manager (async with) to close automatically
 ```
