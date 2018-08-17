@@ -74,8 +74,8 @@ class Page:
         raw_html = await self._html()
         return self._cleanhtml(raw_html)
 
-    async def _edit(self, content: str):
-        """Edits a page."""
+    async def edit(self, content: str):
+        """Edits the page."""
         token = self.csrf or "+\\"
         json = {
         "action": "edit",
