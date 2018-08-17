@@ -14,7 +14,7 @@ class Page:
         pass
 
     async def _get_token(self, type="csrf"):
-        """Get an API token for a login attempt."""
+        """Get an API token for actions requiring authorization."""
         url = f"{self.base_url}?action=query&meta=tokens&type={type}&format=json"
 
         async with self.session.get(url) as r:
@@ -89,6 +89,7 @@ class Page:
             token = await self._get_token(type="csrf")
         else:
             token = "+\\"
+        print(token) #debugging
         json = {
         "action": "edit",
         "format": "json",
