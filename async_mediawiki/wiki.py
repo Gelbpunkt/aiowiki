@@ -13,7 +13,7 @@ class Wiki:
         self.logged_in = False
         if test:
             if not base_url.endswith("api.php"):
-                raise BadWikiUrl("The wiki URL doesn\'t end with \'api.php\'. Add test=True if you want to skip this warning"
+                raise BadWikiUrl("The wiki URL doesn\'t end with \'api.php\'. Add test=True if you want to skip this warning")
 
     async def close(self):
         """Close the aiohttp Session"""
