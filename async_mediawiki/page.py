@@ -1,6 +1,7 @@
 import asyncio
 import re
 from html import unescape
+from .exceptions import *
 
 class Page:
 
@@ -20,14 +21,20 @@ class Page:
         async with self.session.get(url) as r:
             data = await r.json()
 
-        return data["query"]["tokens"][f"{type}token"]
+        try:
+            return data["query"]["tokens"][f"{type}token"]
+        except KeyError:
+            raise TokenGetError(data["error"]["info"])
 
     async def _html(self):
         """Helper function that downloads the page HTML."""
         url = f"{self.base_url}?action=parse&page={self.title}&format=json"
         async with self.session.get(url) as r:
             data = await r.json()
-        html = data["parse"]["text"]["*"]
+        try:
+            html = data["parse"]["text"]["*"]
+        except KeyError:
+            raise PageNotFound("Unknown Page or error when getting html")
         unescape(html)
         return html
 
@@ -36,7 +43,10 @@ class Page:
         url = f"{self.base_url}?action=query&titles={self.title}&prop=revisions&rvprop=content&format=json&formatversion=2"
         async with self.session.get(url) as r:
             data = await r.json()
-        md = data["query"]["pages"][0]["revisions"][0]["content"]
+        try:
+            md = data["query"]["pages"][0]["revisions"][0]["content"]
+        except KeyError:
+            raise PageNotFound("Unknown Page or error when getting markdown")
         unescape(md)
         return md
 
@@ -45,7 +55,10 @@ class Page:
         url = f"{self.base_url}?format=json&action=query&prop=extracts&exintro=&explaintext=&titles={self.title}"
         async with self.session.get(url) as r:
             data = await r.json()
-        summary = data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
+        try:
+            summary = data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
+        except KeyError:
+            raise PageNotFound("Unknown Page or error when getting summary")
         unescape(summary)
         return summary
 
@@ -89,7 +102,6 @@ class Page:
             token = await self._get_token(type="csrf")
         else:
             token = "+\\"
-        print(token) #debugging
         json = {
         "action": "edit",
         "format": "json",
@@ -98,4 +110,7 @@ class Page:
         "token": token
         }
         async with self.session.post(self.base_url, data=json) as r:
-            return await r.json()
+            data = await r.json()
+        if data.get("error"):
+            raise EditError(data["error"]["info"])
+        return True

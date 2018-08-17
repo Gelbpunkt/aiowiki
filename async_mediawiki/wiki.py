@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 
 from .page import Page
+from .exceptions import *
 
 class Wiki:
 
@@ -28,7 +29,10 @@ class Wiki:
         async with self.session.get(url) as r:
             data = await r.json()
 
-        return data["query"]["tokens"][f"{type}token"]
+        try:
+            return data["query"]["tokens"][f"{type}token"]
+        except KeyError:
+            raise TokenGetError(data["error"]["info"])
 
     async def create_account(self, username: str, password: str, email: str=None, real_name: str=None):
         """Creates an account in the wiki. May fail if captchas are required."""
@@ -48,7 +52,10 @@ class Wiki:
             json["realname"] = real_name
 
         async with self.session.post(self.base_url, data=json) as r:
-            return await r.json()
+            json = await r.json()
+        if json.get("error"):
+            raise CreateAccountError(json["error"]["info"])
+        return True
 
     async def login(self, username: str, password: str):
         """Logs in to the wiki."""
@@ -66,7 +73,10 @@ class Wiki:
         self.logged_in = True #todo: put this only on success
 
         async with self.session.post(self.base_url, data=json) as r:
-            return await r.json()
+            json = await r.json()
+        if json.get("error"):
+            raise LoginFailure(json["error"]["info"])
+        return True
 
     async def get_page(self, page_title: str):
         """Retrieves a page from the wiki. Returns a Page object."""

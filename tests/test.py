@@ -1,12 +1,12 @@
 import async_mediawiki as mw
 import asyncio
 
-async def test():
-    wiki = mw.Wiki("https://wiki.idlerpg.fun/api.php")
+async def test_working():
+    wiki = mw.Wiki("insert mediawiki api here")
 
-    page = await wiki.get_page("Main Page")
     #await wiki.create_account("AdrianBotto2", "pass1234")
-    await wiki.login("AdrianBotto2", "pass1234")
+    print(await wiki.login("AdrianBotto2", "pass1234"))
+    page = await wiki.get_page("Main Page")
     await page.html # no print because it looks ugly...
     await asyncio.sleep(1)
     print(await page.markdown)
@@ -17,5 +17,11 @@ async def test():
 
     await wiki.close()
 
+async def test_crash():
+    async with mw.Wiki("https://wiki.idlerpg.fun/api.php") as wiki:
+        p = await wiki.get_page("skfjsdklfjkl")
+        print(await p.text)
+
 loop = asyncio.get_event_loop()
-loop.run_until_complete(test())
+#loop.run_until_complete(test_working())
+loop.run_until_complete(test_crash())
