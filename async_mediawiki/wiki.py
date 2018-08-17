@@ -70,8 +70,4 @@ class Wiki:
 
     async def get_page(self, page_title: str):
         """Retrieves a page from the wiki. Returns a Page object."""
-        if self.logged_in:
-            token = await self._get_token("csrf")
-        else:
-            token = None
-        return Page(page_title, self.base_url, self.session, token)
+        return Page(page_title, self.base_url, self.session, self.logged_in)

@@ -4,14 +4,23 @@ from html import unescape
 
 class Page:
 
-    def __init__(self, page_title, url, session, csrf):
+    def __init__(self, page_title, url, session, logged_in):
         self.session = session
         self.base_url = url
         self.title = page_title
-        self.csrf = csrf
+        self.logged_in = logged_in
 
     async def __aexit__(self, exception_type, exception_value, traceback):
         pass
+
+    async def _get_token(self, type="csrf"):
+        """Get an API token for a login attempt."""
+        url = f"{self.base_url}?action=query&meta=tokens&type={type}&format=json"
+
+        async with self.session.get(url) as r:
+            data = await r.json()
+
+        return data["query"]["tokens"][f"{type}token"]
 
     async def _html(self):
         """Helper function that downloads the page HTML."""
@@ -76,7 +85,10 @@ class Page:
 
     async def edit(self, content: str):
         """Edits the page."""
-        token = self.csrf or "+\\"
+        if self.logged_in:
+            token = await self._get_token(type="csrf")
+        else:
+            token = "+\\"
         json = {
         "action": "edit",
         "format": "json",
