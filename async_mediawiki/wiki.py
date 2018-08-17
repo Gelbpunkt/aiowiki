@@ -37,6 +37,19 @@ class Wiki:
         except KeyError:
             raise TokenGetError(data["error"]["info"])
 
+    async def _rand_pages(self, num: int=1, namespace: str="*"):
+        """Gets num random pages in namespace namespace"""
+        url = f"{self.base_url}?action=query&list=random&rnlimit={num}&rnnamespace={namespace}&format=json"
+
+        async with self.session.get(url) as r:
+            data = await r.json()
+
+        pages = []
+        for page in data["query"]["random"]:
+            pages.append(await self.get_page(page["title"]))
+
+        return pages
+
     async def create_account(self, username: str, password: str, email: str=None, real_name: str=None):
         """Creates an account in the wiki. May fail if captchas are required."""
         token = await self._get_token(type="createaccount")
@@ -84,3 +97,7 @@ class Wiki:
     async def get_page(self, page_title: str):
         """Retrieves a page from the wiki. Returns a Page object."""
         return Page(page_title, self.base_url, self.session, self.logged_in)
+
+    async def get_random_pages(self, num: int=1, namespace: str="*"):
+        """Returns a list of Page objects from random wiki pages"""
+        return await self._rand_pages(num, namespace)
