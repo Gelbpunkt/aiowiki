@@ -15,6 +15,10 @@ class Wiki:
             if not base_url.endswith("api.php"):
                 raise BadWikiUrl("The wiki URL doesn\'t end with \'api.php\'. Add test=True if you want to skip this warning")
 
+    @classmethod
+    def wikipedia(cls, language="en", *args, **kwargs):
+        return cls(f"https://{language.lower()}.wikipedia.org/w/api.php", *args, **kwargs)
+
     async def close(self):
         """Close the aiohttp Session"""
         await self.session.close()
