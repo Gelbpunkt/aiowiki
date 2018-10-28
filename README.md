@@ -4,13 +4,13 @@ An asynchronous python libary to get mediawiki content
 [![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/async-mediawiki?branch=master)](https://bettercodehub.com/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki?ref=badge_shield)
 
-# Installation
+## Installation
 
 It requires Python 3.6 or above and aiohttp
 
 `pip3 install async-mediawiki`
 
-# Usage
+## Usage
 ```python
 import async_mediawiki as mw
 
