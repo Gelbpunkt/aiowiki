@@ -1,6 +1,5 @@
 import asyncio
 import re
-from html import unescape
 from .exceptions import *
 
 class Page:
