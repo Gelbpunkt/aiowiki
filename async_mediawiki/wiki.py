@@ -3,7 +3,6 @@ import asyncio
 
 from .page import Page
 from .exceptions import *
-from .context_managers import *
 from .http import HTTPClient
 
 class Wiki:
