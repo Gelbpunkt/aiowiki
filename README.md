@@ -19,6 +19,7 @@ Development Version:
 import async_mediawiki as mw
 
 wiki = mw.Wiki("wiki api url here") #make a Wiki object which is the key to the library
+wiki = mw.Wiki.wikipedia("en") #alternate constructor for Wikipedia Wikis
 await wiki.create_account("test", "pass1234") #create an account in the wiki
 await wiki.login("test", "pass1234") #login with the newly made user
 await wiki.get_random_pages(3) #get a list of pages
