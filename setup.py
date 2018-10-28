@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 
 requirements = []
-with open('requirements.txt') as f:
+with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(

@@ -1,7 +1,8 @@
 from .exceptions import *
 from html import unescape
 
-class HTTPClient():
+
+class HTTPClient:
     """A Proxy object for all API actions"""
 
     def __init__(self, url, session, logged_in):

@@ -1,6 +1,7 @@
 import async_mediawiki as mw
 import asyncio
 
+
 async def test_working():
     wiki = mw.Wiki("api.php endpoint here")
 
@@ -14,12 +15,14 @@ async def test_working():
 
     await wiki.close()
 
+
 async def test_crash():
     async with mw.Wiki("api.php endpoint here") as wiki:
         p = await wiki.get_page("page does not exist")
         print(await p.text)
         await wiki.login("wronguser", "wrongpass")
         await p.edit("I don't have perms to do so!")
+
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(test_working())
