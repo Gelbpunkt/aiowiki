@@ -1,5 +1,4 @@
 import aiohttp
-import asyncio
 
 from .page import Page
 from .exceptions import *

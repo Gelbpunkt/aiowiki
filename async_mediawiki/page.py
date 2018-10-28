@@ -41,7 +41,7 @@ class Page:
     async def text(self):
         raw_html = await self.html
         return self._cleanhtml(raw_html)
-    
+
     @property
     async def summary(self):
         return await self.wiki.http.get_summary(self.title)
