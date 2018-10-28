@@ -1,0 +1,2 @@
+class HTTPClient():
+    pass

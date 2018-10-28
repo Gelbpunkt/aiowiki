@@ -5,65 +5,9 @@ from .exceptions import *
 
 class Page:
 
-    def __init__(self, page_title, url, session, logged_in):
-        self.session = session
-        self.base_url = url
+    def __init__(self, page_title, wiki):
         self.title = page_title
-        self.logged_in = logged_in
-
-    async def __aenter__(self):
-        return self
-
-    async def __aexit__(self, exception_type, exception_value, traceback):
-        del self
-
-    async def _get_token(self, type="csrf"):
-        """Get an API token for actions requiring authorization."""
-        url = f"{self.base_url}?action=query&meta=tokens&type={type}&format=json"
-
-        async with self.session.get(url) as r:
-            data = await r.json()
-
-        try:
-            return data["query"]["tokens"][f"{type}token"]
-        except KeyError:
-            raise TokenGetError(data["error"]["info"])
-
-    async def _html(self):
-        """Helper function that downloads the page HTML."""
-        url = f"{self.base_url}?action=parse&page={self.title}&format=json"
-        async with self.session.get(url) as r:
-            data = await r.json()
-        try:
-            html = data["parse"]["text"]["*"]
-        except KeyError:
-            raise PageNotFound("Unknown Page or error when getting html")
-        unescape(html)
-        return html
-
-    async def _markdown(self):
-        """Helper function to get page markdown."""
-        url = f"{self.base_url}?action=query&titles={self.title}&prop=revisions&rvprop=content&format=json&formatversion=2"
-        async with self.session.get(url) as r:
-            data = await r.json()
-        try:
-            md = data["query"]["pages"][0]["revisions"][0]["content"]
-        except KeyError:
-            raise PageNotFound("Unknown Page or error when getting markdown")
-        unescape(md)
-        return md
-
-    async def _summary(self):
-        """Helper function to get page summary."""
-        url = f"{self.base_url}?format=json&action=query&prop=extracts&exintro=&explaintext=&titles={self.title}"
-        async with self.session.get(url) as r:
-            data = await r.json()
-        try:
-            summary = data["query"]["pages"][list(data["query"]["pages"].keys())[0]]["extract"]
-        except KeyError:
-            raise PageNotFound("Unknown Page or error when getting summary")
-        unescape(summary)
-        return summary
+        self.wiki = wiki
 
     def _cleanhtml(self, raw_html):
         """Makes the Mediawiki HTML readable text."""
@@ -88,36 +32,26 @@ class Page:
 
     @property
     async def html(self):
-        return await self._html()
+        return await self.wiki.http.get_html(self.title)
 
     @property
     async def markdown(self):
-        return await self._markdown()
+        return await self.wiki.http.get_markdown(self.title)
 
     @property
     async def text(self):
-        raw_html = await self._html()
+        raw_html = await self.html
         return self._cleanhtml(raw_html)
     
     @property
     async def summary(self):
-        return await self._summary()
+        return await self.wiki.http.get_summary(self.title)
 
     async def edit(self, content: str):
         """Edits the page."""
-        if self.logged_in:
-            token = await self._get_token(type="csrf")
-        else:
-            token = "+\\"
         json = {
-        "action": "edit",
-        "format": "json",
-        "title": self.title,
-        "text": content,
-        "token": token
+            "title": self.title,
+            "text": content,
         }
-        async with self.session.post(self.base_url, data=json) as r:
-            data = await r.json()
-        if data.get("error"):
-            raise EditError(data["error"]["info"])
+        await self.wiki.http.edit_page(json)
         return True

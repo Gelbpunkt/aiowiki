@@ -1,4 +1,4 @@
-import async_mediawiki as mw
+import async_mediawiki2 as mw
 import asyncio
 
 async def test_working():
@@ -8,8 +8,9 @@ async def test_working():
     #await wiki.login("test", "pass1234")
     print(await wiki.get_random_pages(3))
     async with wiki.get_page("Mediawiki") as page:
-        print(dir(page))
-        print(await page.summary)
+        print(await page.text)
+
+    print(page)
 
     await wiki.close()
 
@@ -20,4 +21,4 @@ async def test_crash():
 
 loop = asyncio.get_event_loop()
 loop.run_until_complete(test_working())
-loop.run_until_complete(test_crash())
+#loop.run_until_complete(test_crash())
