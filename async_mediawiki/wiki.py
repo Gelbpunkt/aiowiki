@@ -3,17 +3,13 @@ import asyncio
 
 from .page import Page
 from .exceptions import *
+from .http import HTTPClient
 
 class Wiki:
 
-    def __init__(self, base_url: str, session=None, loop=None, test=True):
-        self.base_url = base_url
-        self.loop = loop or asyncio.get_event_loop()
-        self.session = session or aiohttp.ClientSession(loop=self.loop)
-        self.logged_in = False
-        if test:
-            if not base_url.endswith("api.php"):
-                raise BadWikiUrl("The wiki URL doesn\'t end with \'api.php\'. Add test=True if you want to skip this warning")
+    def __init__(self, base_url: str, session: aiohttp.ClientSession=None):
+        session = session or aiohttp.ClientSession()
+        self.http = HTTPClient(url=base_url, session=session, logged_in=False)
 
     @classmethod
     def wikipedia(cls, language="en", *args, **kwargs):
@@ -21,7 +17,7 @@ class Wiki:
 
     async def close(self):
         """Close the aiohttp Session"""
-        await self.session.close()
+        await self.http.close()
 
     async def __aenter__(self):
         return self
@@ -29,79 +25,39 @@ class Wiki:
     async def __aexit__(self, exception_type, exception_value, traceback):
         await self.close()
 
-    async def _get_token(self, type="csrf"):
+    async def get_token(self, type: str="csrf"):
         """Get an API token for a login attempt."""
-        url = f"{self.base_url}?action=query&meta=tokens&type={type}&format=json"
+        return await self.http.get_token(type)
 
-        async with self.session.get(url) as r:
-            data = await r.json()
+    async def get_random_pages(self, num: int=1, namespace: str="*"):
+        """Gets a list of random Page objects"""
+        data = await self.http.get_random_pages(num, namespace)
 
-        try:
-            return data["query"]["tokens"][f"{type}token"]
-        except KeyError:
-            raise TokenGetError(data["error"]["info"])
-
-    async def _rand_pages(self, num: int=1, namespace: str="*"):
-        """Gets num random pages in namespace namespace"""
-        url = f"{self.base_url}?action=query&list=random&rnlimit={num}&rnnamespace={namespace}&format=json"
-
-        async with self.session.get(url) as r:
-            data = await r.json()
-
-        pages = []
-        for page in data["query"]["random"]:
-            pages.append(await self.get_page(page["title"]))
-
-        return pages
+        return [self.get_page(page) for page in data]
 
     async def create_account(self, username: str, password: str, email: str=None, real_name: str=None):
         """Creates an account in the wiki. May fail if captchas are required."""
-        token = await self._get_token(type="createaccount")
         json = {
-        "action": "createaccount",
-        "format": "json",
-        "username": username,
-        "password": password,
-        "retype": password,
-        "createtoken": token,
-        "createreturnurl": self.base_url
-         }
-        if email:
-            json["email"] = email
-        if real_name:
-            json["realname"] = real_name
+            "username": username,
+            "password": password,
+            "retype": password,
+            "email": email,
+            "realname": real_name
+        }
 
-        async with self.session.post(self.base_url, data=json) as r:
-            json = await r.json()
-        if json.get("error"):
-            raise CreateAccountError(json["error"]["info"])
+        await self.http.create_account(json)
         return True
 
     async def login(self, username: str, password: str):
         """Logs in to the wiki."""
-        token = await self._get_token(type="login")
         json = {
-        "action": "clientlogin",
-        "loginreturnurl": self.base_url,
-        "username": username,
-        "password": password,
-        "format": "json",
-        "rememberMe": 1,
-        "logintoken": token
+            "username": username,
+            "password": password,
         }
 
-        self.logged_in = True #todo: put this only on success
-
-        async with self.session.post(self.base_url, data=json) as r:
-            json = await r.json()
-        if json.get("error"):
-            raise LoginFailure(json["error"]["info"])
+        await self.http.login(json)
         return True
 
-    async def get_page(self, page_title: str):
+    def get_page(self, page_title: str):
         """Retrieves a page from the wiki. Returns a Page object."""
-        return Page(page_title, self.base_url, self.session, self.logged_in)
-
-    async def get_random_pages(self, num: int=1, namespace: str="*"):
-        """Returns a list of Page objects from random wiki pages"""
-        return await self._rand_pages(num, namespace)
+        return Page(page_title, wiki=self)
