@@ -4,6 +4,7 @@ An asynchronous python libary to get mediawiki content
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbab3395b87049748a95e9f0d8c73d42)](https://app.codacy.com/app/Gelbpunkt/async-mediawiki?utm_source=github.com&utm_medium=referral&utm_content=Gelbpunkt/async-mediawiki&utm_campaign=Badge_Grade_Dashboard)
 [![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/async-mediawiki?branch=master)](https://bettercodehub.com/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki?ref=badge_shield)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c9462231dd004787871d36aee74e4a2f)](https://www.codacy.com/app/Gelbpunkt/async-mediawiki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Gelbpunkt/async-mediawiki&amp;utm_campaign=Badge_Grade)
 
 ## Installation
 
