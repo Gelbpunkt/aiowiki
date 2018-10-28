@@ -95,7 +95,7 @@ class Page:
     async def text(self):
         raw_html = await self._html()
         return self._cleanhtml(raw_html)
-    
+
     @property
     async def summary(self):
         return await self._summary()

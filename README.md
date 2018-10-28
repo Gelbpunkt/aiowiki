@@ -28,6 +28,5 @@ await page.edit("That's a nice lib!") #edit the page, automatically uses the log
 await wiki.close() #the Wiki object also supports a context manager (async with) to close automatically
 ```
 
-
 ## License
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki?ref=badge_large)
