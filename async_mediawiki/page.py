@@ -11,8 +11,11 @@ class Page:
         self.title = page_title
         self.logged_in = logged_in
 
+    async def __aenter__(self):
+        return self
+
     async def __aexit__(self, exception_type, exception_value, traceback):
-        pass
+        del self
 
     async def _get_token(self, type="csrf"):
         """Get an API token for actions requiring authorization."""

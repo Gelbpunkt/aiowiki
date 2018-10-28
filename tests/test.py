@@ -2,19 +2,14 @@ import async_mediawiki as mw
 import asyncio
 
 async def test_working():
-    wiki = mw.Wiki("wiki api url here")
+    wiki = mw.Wiki.wikipedia("en")
 
-    await wiki.create_account("test", "pass1234")
-    await wiki.login("test", "pass1234")
+    #await wiki.create_account("test", "pass1234")
+    #await wiki.login("test", "pass1234")
     print(await wiki.get_random_pages(3))
-    page = await wiki.get_page("Mediawiki")
-    await page.html # no print because it looks ugly and is long
-    await asyncio.sleep(1)
-    print(await page.markdown)
-    await asyncio.sleep(1)
-    print(await page.text)
-    await asyncio.sleep(1)
-    print(await page.edit("Test 1234 Bois!"))
+    async with wiki.get_page("Mediawiki") as page:
+        print(dir(page))
+        print(await page.summary)
 
     await wiki.close()
 
