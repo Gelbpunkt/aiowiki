@@ -14,7 +14,7 @@ It requires Python 3.6 or above and aiohttp
 
 Development Version:
 
-`pip3 install git+https://github.com/Gelbpunkt/async-mediawiki@testing`
+`pip3 install git+https://github.com/Gelbpunkt/async-mediawiki`
 
 ## Usage
 ```python
