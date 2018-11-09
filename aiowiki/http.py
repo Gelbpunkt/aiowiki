@@ -130,5 +130,5 @@ class HTTPClient:
         pages = data["query"].get("pages")
         if not pages:
             raise PageNotFound("Unknown Page or error when getting page URLs")
-        page = list(pages.items())[0]
+        page = list(pages.items())[0][1]
         return [page["fullurl"], page["editurl"]]

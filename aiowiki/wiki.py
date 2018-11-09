@@ -9,6 +9,10 @@ class Wiki:
     def __init__(self, base_url: str, session: aiohttp.ClientSession = None):
         session = session or aiohttp.ClientSession()
         self.http = HTTPClient(url=base_url, session=session, logged_in=False)
+        self.url = base_url
+
+    def __repr__(self):
+        return f"<aiowiki.wiki.Wiki url={self.url}>"
 
     @classmethod
     def wikipedia(cls, language="en", *args, **kwargs):

@@ -8,6 +8,9 @@ class Page:
         self.title = page_title
         self.wiki = wiki
 
+    def __repr__(self):
+        return f"<aiowiki.Page.page title={self.title}>"
+
     def _cleanhtml(self, raw_html):
         """Makes the Mediawiki HTML readable text."""
 
