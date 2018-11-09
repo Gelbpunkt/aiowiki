@@ -9,6 +9,10 @@ class Wiki:
     def __init__(self, base_url: str, session: aiohttp.ClientSession = None):
         session = session or aiohttp.ClientSession()
         self.http = HTTPClient(url=base_url, session=session, logged_in=False)
+        self.url = base_url
+
+    def __repr__(self):
+        return f"<aiowiki.wiki.Wiki url={self.url}>"
 
     @classmethod
     def wikipedia(cls, language="en", *args, **kwargs):
@@ -61,3 +65,12 @@ class Wiki:
     def get_page(self, page_title: str):
         """Retrieves a page from the wiki. Returns a Page object."""
         return Page(page_title, wiki=self)
+
+    async def opensearch(
+        self, search_query: str, limit: int = 10, namespace: str = "0"
+    ):
+        """Returns limit Page objects matching the query"""
+        return [
+            Page(title, wiki=self)
+            for title in await self.http.opensearch(search_query, limit, namespace)
+        ]

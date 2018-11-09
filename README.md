@@ -1,4 +1,4 @@
-# async-mediawiki
+# aiowiki
 An asynchronous python libary to get mediawiki content
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbab3395b87049748a95e9f0d8c73d42)](https://app.codacy.com/app/Gelbpunkt/async-mediawiki?utm_source=github.com&utm_medium=referral&utm_content=Gelbpunkt/async-mediawiki&utm_campaign=Badge_Grade_Dashboard)
@@ -10,29 +10,30 @@ An asynchronous python libary to get mediawiki content
 
 It requires Python 3.6 or above and aiohttp
 
-`pip3 install async-mediawiki`
+`pip3 install aiowiki`
 
 Development Version:
 
-`pip3 install git+https://github.com/Gelbpunkt/async-mediawiki`
+`pip3 install git+https://github.com/Gelbpunkt/aiowiki`
 
-## Usage
+## Quick start
 ```python
-import async_mediawiki as mw
+import aiowiki
 
-wiki = mw.Wiki("wiki api url here") #make a Wiki object which is the key to the library
-wiki = mw.Wiki.wikipedia("en") #alternate constructor for Wikipedia Wikis
-await wiki.create_account("test", "pass1234") #create an account in the wiki
-await wiki.login("test", "pass1234") #login with the newly made user
-await wiki.get_random_pages(3) #get a list of pages
+wiki = aiowiki.Wiki.wikipedia("en") # We're using the alternate constructor for pre-made Wikipedia Wikis
+await wiki.login("test", "pass1234") # Logging in (optional)
 
-page = wiki.get_page("Mediawiki") #get a specific page
-print(await page.html) #print the pure page html
-print(await page.markdown) #print the pure page markdown (wiki code)
-print(await page.text) #print the page's text (library handled filtering of the HTML)
+pages = await wiki.get_random_pages(3) # get a list of random pages
 
-await page.edit("That's a nice lib!") #edit the page, automatically uses the logged in user or anonymous
-await wiki.close() #the Wiki object also supports a context manager (async with) to close automatically
+page = wiki.get_page("aiowiki") # get a specific page
+
+print(await page.html) # print the pure page html
+print(await page.markdown) # print the pure page markdown (wiki code)
+print(await page.text) # print the page's text (library handles filtering of the HTML)
+
+await page.edit("That's a nice lib!") # edit the page, automatically uses the logged in user or anonymous
+
+await wiki.close() # the Wiki object also supports a context manager (async with) to close automatically
 ```
 
 ## License

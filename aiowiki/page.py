@@ -1,11 +1,15 @@
 import re
 from .exceptions import *
+from collections import namedtuple
 
 
 class Page:
     def __init__(self, page_title, wiki):
         self.title = page_title
         self.wiki = wiki
+
+    def __repr__(self):
+        return f"<aiowiki.Page.page title={self.title}>"
 
     def _cleanhtml(self, raw_html):
         """Makes the Mediawiki HTML readable text."""
@@ -44,6 +48,12 @@ class Page:
     @property
     async def summary(self):
         return await self.wiki.http.get_summary(self.title)
+
+    @property
+    async def urls(self):
+        url_tuple = namedtuple("WikiURLs", ["view", "edit"])
+        urls = await self.wiki.http.get_urls(self.title)
+        return url_tuple(urls[0], urls[1])
 
     async def edit(self, content: str):
         """Edits the page."""
