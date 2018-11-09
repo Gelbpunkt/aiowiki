@@ -44,7 +44,7 @@ class HTTPClient:
         async with self.session.post(self.url, data=json) as r:
             json = await r.json()
         if json["createaccount"]["status"] == "FAIL":
-            raise CreateAccountError(json["createaccount"]["mesagecode"])
+            raise CreateAccountError(json["createaccount"]["messagecode"])
         return True
 
     async def login(self, json):
