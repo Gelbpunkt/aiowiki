@@ -1,6 +1,6 @@
 import re
 from .exceptions import *
-
+from collections import namedtuple
 
 class Page:
     def __init__(self, page_title, wiki):
@@ -44,6 +44,10 @@ class Page:
     @property
     async def summary(self):
         return await self.wiki.http.get_summary(self.title)
+
+    @property
+    async def urls(self):
+        return namedtuple('WikiURLs', await self.wiki.http.get_urls(self.title), verbose=True)
 
     async def edit(self, content: str):
         """Edits the page."""

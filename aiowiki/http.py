@@ -114,3 +114,21 @@ class HTTPClient:
         if data.get("error"):
             raise EditError(data["error"]["info"])
         return True
+
+    async def opensearch(self, title, limit, namespace):
+        """Searches for a page title and returns limit results as a list"""
+        url = f"{self.url}?action=opensearch&search={title}&limit={limit}&namespace={namespace}&format=json"
+        async with self.session.get(url) as r:
+            data = await r.json()
+        return data[1]
+
+    async def get_urls(self, title):
+        """Searches for URLs matching a title and returns edit URL and page URL in a list"""
+        url = f"{self.url}?action=query&format=json&prop=info&generator=allpages&inprop=url&gapfrom=Apple&gaplimit=1"
+        async with self.session.get(url) as r:
+            data = await r.json()
+        pages = data["query"].get("pages")
+        if not pages:
+            raise PageNotFound("Unknown Page or error when getting page URLs")
+        page = list(pages.items())[0]
+        return [page["fullurl"], page["editurl"]]

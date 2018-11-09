@@ -9,14 +9,14 @@ with open("requirements.txt") as f:
     requirements = f.read().splitlines()
 
 setuptools.setup(
-    name="async_mediawiki",
-    version="0.2.0",
+    name="aiowiki",
+    version="1.0.0",
     author="Jens Reidel",
     author_email="jens.reidel@gmail.com",
-    description="Async Mediawiki Python library",
+    description="A AsyncIO-based module for interacting with the Mediawiki API using aiohttp",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/Gelbpunkt/async-mediawiki",
+    url="https://github.com/Gelbpunkt/aiowiki",
     packages=setuptools.find_packages(),
     license="MIT",
     install_requires=requirements,

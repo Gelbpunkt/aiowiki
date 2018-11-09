@@ -1,3 +1,3 @@
-name = "async_mediawiki"
+name = "aiowiki"
 from .wiki import *
 from .exceptions import *
