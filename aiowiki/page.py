@@ -48,9 +48,9 @@ class Page:
 
     @property
     async def urls(self):
-        return namedtuple(
-            "WikiURLs", await self.wiki.http.get_urls(self.title), verbose=True
-        )
+        url_tuple = namedtuple("WikiURLs", ["view", "edit"], verbose=True)
+        urls = await self.wiki.http.get_urls(self.title)
+        return url_tuple(urls[0], urls[1])
 
     async def edit(self, content: str):
         """Edits the page."""
