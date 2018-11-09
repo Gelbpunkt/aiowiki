@@ -62,6 +62,11 @@ class Wiki:
         """Retrieves a page from the wiki. Returns a Page object."""
         return Page(page_title, wiki=self)
 
-    async def opensearch(self, search_query: str, limit: int = 10, namespace: str = "0"):
+    async def opensearch(
+        self, search_query: str, limit: int = 10, namespace: str = "0"
+    ):
         """Returns limit Page objects matching the query"""
-        return [Page(title, wiki=self) for title in await self.http.opensearch(search_query, limit, namespace)]
+        return [
+            Page(title, wiki=self)
+            for title in await self.http.opensearch(search_query, limit, namespace)
+        ]
