@@ -10,6 +10,8 @@ Welcome to aiowiki's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   aiowiki
+
 Indices and tables
 ==================
 
