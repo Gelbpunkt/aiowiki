@@ -51,7 +51,7 @@ class Page:
 
     @property
     async def urls(self):
-        url_tuple = namedtuple("WikiURLs", ["view", "edit"], verbose=True)
+        url_tuple = namedtuple("WikiURLs", ["view", "edit"])
         urls = await self.wiki.http.get_urls(self.title)
         return url_tuple(urls[0], urls[1])
 
