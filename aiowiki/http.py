@@ -124,7 +124,7 @@ class HTTPClient:
 
     async def get_urls(self, title):
         """Searches for URLs matching a title and returns edit URL and page URL in a list"""
-        url = f"{self.url}?action=query&format=json&prop=info&generator=allpages&inprop=url&gapfrom=Apple&gaplimit=1"
+        url = f"{self.url}?action=query&format=json&prop=info&generator=allpages&inprop=url&gapfrom={title}&gaplimit=1"
         async with self.session.get(url) as r:
             data = await r.json()
         pages = data["query"].get("pages")
