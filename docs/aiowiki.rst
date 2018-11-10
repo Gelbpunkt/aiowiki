@@ -12,14 +12,6 @@ aiowiki.exceptions module
     :undoc-members:
     :show-inheritance:
 
-aiowiki.http module
--------------------
-
-.. automodule:: aiowiki.http
-    :members:
-    :undoc-members:
-    :show-inheritance:
-
 aiowiki.page module
 -------------------
 
