@@ -1,7 +1,7 @@
 # aiowiki
 An asynchronous python libary to get mediawiki content
 
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/bbab3395b87049748a95e9f0d8c73d42)](https://app.codacy.com/app/Gelbpunkt/async-mediawiki?utm_source=github.com&utm_medium=referral&utm_content=Gelbpunkt/async-mediawiki&utm_campaign=Badge_Grade_Dashboard)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f634a400d4ed40ec8f51b1ce0f43fd5e)](https://www.codacy.com/app/Gelbpunkt/aiowiki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Gelbpunkt/aiowiki&amp;utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/async-mediawiki?branch=master)](https://bettercodehub.com/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki?ref=badge_shield)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
