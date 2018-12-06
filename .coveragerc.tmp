@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = aiowiki/
+source = aiowiki
 
 [report]
 exclude_lines =
