@@ -45,6 +45,7 @@ jobs:
             find dist -name *.whl -exec pip install '{}' +
             python3 tests/__init__.py
             coverage run tests/__init__.py
+            codecov
             
       # build docs
       - run:
