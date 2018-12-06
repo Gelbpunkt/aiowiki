@@ -7,6 +7,7 @@ An asynchronous python libary to get mediawiki content
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![CircleCI](https://img.shields.io/circleci/project/github/Gelbpunkt/aiowiki/master.svg?label=CircleCI)](https://circleci.com/gh/Gelbpunkt/aiowiki)
 [![License](https://img.shields.io/pypi/l/aiowiki.svg)](https://github.com/Gelbpunkt/aiowiki/blob/master/LICENSE)
+[![codecov](https://codecov.io/gh/Gelbpunkt/aiowiki/branch/master/graph/badge.svg)](https://codecov.io/gh/Gelbpunkt/aiowiki)
 
 ## Installation
 
