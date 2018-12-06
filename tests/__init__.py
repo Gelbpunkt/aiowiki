@@ -29,14 +29,14 @@ class Test_Aiowiki(asynctest.TestCase):
         await page.summary  # should have a page, so it actually fetches there
         await wiki.close()
 
-    @asynctest.skipIf(small_test)
+    @asynctest.skipIf(small_test, "No enviroment variables for testing set up")
     async def test_page_edit(self):
         wiki = aiowiki.Wiki(AIOWIKI_TEST_URL)
         page = wiki.get_page("Spam")
         await page.edit("Eggs & Ham")
         await wiki.close()
 
-    @asynctest.skipIf(small_test)
+    @asynctest.skipIf(small_test, "No enviroment variables for testing set up")
     async def test_login(self):
         wiki = aiowiki.Wiki(AIOWIKI_TEST_URL)
         with self.assertRaises(aiowiki.LoginFailure):
@@ -44,7 +44,7 @@ class Test_Aiowiki(asynctest.TestCase):
         await wiki.login(AIOWIKI_TEST_USERNAME, AIOWIKI_TEST_PASSWORD)
         await wiki.close()
 
-    @asynctest.skipIf(small_test)
+    @asynctest.skipIf(small_test, "No enviroment variables for testing set up")
     async def test_create_account(self):
         wiki = aiowiki.Wiki.wikipedia("en")
         with self.assertRaises(aiowiki.CreateAccountError):
