@@ -12,6 +12,7 @@ class Wiki:
     :param session: An opional :class:`aiohttp.ClientSession` to use for the internal Wiki HTTP operations. Leaving this empty will automatically create one.
     :type session: aiohttp.ClientSession or None
     """
+
     def __init__(self, base_url: str, session: aiohttp.ClientSession = None):
         session = session or aiohttp.ClientSession()
         self.http = HTTPClient(url=base_url, session=session, logged_in=False)
