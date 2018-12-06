@@ -27,7 +27,7 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -U pip setuptools wheel
-            pip install -U asynctest sphinx sphinxcontrib-asyncio
+            pip install -U asynctest sphinx sphinxcontrib-asyncio codecov
             pip install -U -r requirements.txt
       - save_cache:
           paths: 
@@ -44,6 +44,7 @@ jobs:
             rm -rf aiowiki
             find dist -name *.whl -exec pip install '{}' +
             python3 tests/__init__.py
+            codecov
             
       # build docs
       - run:
