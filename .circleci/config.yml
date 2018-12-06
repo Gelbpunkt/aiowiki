@@ -44,7 +44,7 @@ jobs:
             rm -rf aiowiki
             find dist -name *.whl -exec pip install '{}' +
             python3 tests/__init__.py
-            codecov
+            coverage run tests/__init__.py
             
       # build docs
       - run:
