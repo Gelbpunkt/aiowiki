@@ -3,7 +3,7 @@ An asynchronous python libary to get mediawiki content
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f634a400d4ed40ec8f51b1ce0f43fd5e)](https://www.codacy.com/app/Gelbpunkt/aiowiki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Gelbpunkt/aiowiki&amp;utm_campaign=Badge_Grade)
 [![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/async-mediawiki?branch=master)](https://bettercodehub.com/)
-[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Fasync-mediawiki?ref=badge_shield)
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Faiowiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Faiowiki?ref=badge_shield)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 [![CircleCI](https://img.shields.io/circleci/project/github/Gelbpunkt/aiowiki/master.svg?label=CircleCI)](https://circleci.com/gh/Gelbpunkt/aiowiki)
 [![License](https://img.shields.io/pypi/l/aiowiki.svg)](https://github.com/Gelbpunkt/aiowiki/blob/master/LICENSE)
