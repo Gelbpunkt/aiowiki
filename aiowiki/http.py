@@ -148,6 +148,6 @@ class HTTPClient:
             data = await r.json()
         pages = data["query"]["pages"]
         urls = [
-            i["imageinfo"]["url"] for i in pages
+            i["imageinfo"][0]["url"] for i in pages.values()
         ]  # imageinfo does not exist if file unknown, but these all exist
         return urls
