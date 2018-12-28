@@ -143,7 +143,7 @@ class HTTPClient:
         if not images:  # either no images or unknown page
             return []
         query = "|".join([i["title"] for i in images])
-        url = f"{self.url}?action=query&titles={query}&prop=imageinfo&iiprop=url"
+        url = f"{self.url}?action=query&titles={query}&format=json&prop=imageinfo&iiprop=url"
         async with self.session.get(url) as r:
             data = await r.json()
         pages = data["query"]["pages"]
