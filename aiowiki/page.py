@@ -66,9 +66,9 @@ class Page:
         urls = await self.wiki.http.get_urls(self.title)
         return url_tuple(urls[0], urls[1])
 
-    async def images(self):
-        """Returns a list of all images used on the page."""
-        return await self.wiki.http.get_images(self.title)
+    async def media(self):
+        """Returns a list of all media used on the page."""
+        return await self.wiki.http.get_media(self.title)
 
     async def edit(self, content: str):
         """Edits the page."""

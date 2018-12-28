@@ -133,13 +133,13 @@ class HTTPClient:
         page = list(pages.items())[0][1]
         return [page["fullurl"], page["editurl"]]
 
-    async def get_images(self, title):
-        """Searches for images on a specific page and returns a list of URLs"""
+    async def get_media(self, title):
+        """Searches for media on a specific page and returns a list of URLs"""
         url = f"{self.url}?action=query&titles={title}&format=json&prop=images"
         async with self.session.get(url) as r:
             data = await r.json()
         pages = data["query"]["pages"]
-        images = list(pages.items())[0].get("images")
+        images = list(pages.values())[0].get("images")
         if not images:  # either no images or unknown page
             return []
         query = "|".join([i["title"] for i in images])
