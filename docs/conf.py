@@ -38,7 +38,26 @@ release = ""
 # Add any Sphinx extension module names here, as strings. They can be
 # extensions coming with Sphinx (named 'sphinx.ext.*') or your custom
 # ones.
-extensions = ["sphinx.ext.autodoc", "sphinx.ext.coverage", "sphinx.ext.viewcode"]
+extensions = [
+    "sphinx.ext.autodoc",
+    "sphinx.ext.coverage",
+    "sphinx.ext.viewcode",
+    "sphinxcontrib.asyncio",
+]
+
+autodoc_member_order = "bysource"
+
+extlinks = {"issue": ("https://github.com/Gelbpunkt/aiowiki/issues/%s", "issue ")}
+
+# Links used for cross-referencing stuff in other documentation
+intersphinx_mapping = {"py": ("https://docs.python.org/3", None)}
+
+rst_prolog = """
+.. |coro| replace:: This function is a |corourl|_.
+.. |maybecoro| replace:: This function *could be a* |corourl|_.
+.. |corourl| replace:: *coroutine*
+.. _corourl: https://docs.python.org/3/library/asyncio-task.html#coroutine
+"""
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]

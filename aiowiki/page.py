@@ -4,6 +4,17 @@ from collections import namedtuple
 
 
 class Page:
+    """Represents a Page in the :meth:`~aiowiki.Wiki`.
+    This is usually acquired by :meth:`~aiowiki.Wiki.get_page` or other methods, and not created directly.
+
+    :param str page_title: The title of the page.
+    :param wiki: The :meth:`~aiowiki.Wiki` object this page belongs to.
+    :type wiki: :class:`~aiowiki.Wiki`
+
+    :ivar title: The page title
+    :ivar wiki: The :meth:`~aiowiki.Wiki` it belongs to
+    """
+
     def __init__(self, page_title, wiki):
         self.title = page_title
         self.wiki = wiki
@@ -32,28 +43,32 @@ class Page:
 
         return cleantext
 
-    @property
     async def html(self):
+        """The pure page HTML."""
         return await self.wiki.http.get_html(self.title)
 
-    @property
     async def markdown(self):
+        """The Markdown version of the page content."""
         return await self.wiki.http.get_markdown(self.title)
 
-    @property
     async def text(self):
+        """The text of the page without HTML tags."""
         raw_html = await self.html
         return self._cleanhtml(raw_html)
 
-    @property
     async def summary(self):
+        """The summary of the page, usually the first paragraph."""
         return await self.wiki.http.get_summary(self.title)
 
-    @property
     async def urls(self):
+        """A namedtuple representing the view and edit URL for the page."""
         url_tuple = namedtuple("WikiURLs", ["view", "edit"])
         urls = await self.wiki.http.get_urls(self.title)
         return url_tuple(urls[0], urls[1])
+
+    async def images(self):
+        """Returns a list of all images used on the page."""
+        return await self.wiki.http.get_images(self.title)
 
     async def edit(self, content: str):
         """Edits the page."""

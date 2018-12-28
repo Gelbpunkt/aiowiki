@@ -5,13 +5,13 @@ class PageNotFound(Exception):
 
 
 class LoginFailure(Exception):
-    """Exception raised when a :func:`~aiowiki.Wiki.login` fails"""
+    """Exception raised when a :meth:`~aiowiki.Wiki.login` fails"""
 
     pass
 
 
 class BadWikiUrl(Exception):
-    """Exception raised when the URL of the :class:`~aiowiki.Wiki` is not in the standard Wikimedia API format"""
+    """Exception raised when the URL of the :meth:`~aiowiki.Wiki` is not in the standard Wikimedia API format"""
 
     pass
 
@@ -23,12 +23,12 @@ class TokenGetError(Exception):
 
 
 class CreateAccountError(Exception):
-    """Exception raised when :func:`~aiowiki.Wiki.create_account` fails"""
+    """Exception raised when :meth:`~aiowiki.Wiki.create_account` fails"""
 
     pass
 
 
 class EditError(Exception):
-    """Exception raised when :func:`~aiowiki.Page.edit` fails"""
+    """Exception raised when :meth:`~aiowiki.Page.edit` fails"""
 
     pass

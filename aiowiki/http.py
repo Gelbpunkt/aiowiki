@@ -132,3 +132,22 @@ class HTTPClient:
             raise PageNotFound("Unknown Page or error when getting page URLs")
         page = list(pages.items())[0][1]
         return [page["fullurl"], page["editurl"]]
+
+    async def get_images(self, title):
+        """Searches for images on a specific page and returns a list of URLs"""
+        url = f"{self.url}?action=query&titles={title}&format=json&prop=images"
+        async with self.session.get(url) as r:
+            data = await r.json()
+        pages = data["query"]["pages"]
+        images = list(pages.items())[0].get("images")
+        if not images:  # either no images or unknown page
+            return []
+        query = "|".join([i["title"] for i in images])
+        url = f"{self.url}?action=query&titles={query}&prop=imageinfo&iiprop=url"
+        async with self.session.get(url) as r:
+            data = await r.json()
+        pages = data["query"]["pages"]
+        urls = [
+            i["imageinfo"]["url"] for i in pages
+        ]  # imageinfo does not exist if file unknown, but these all exist
+        return urls
