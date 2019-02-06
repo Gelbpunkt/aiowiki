@@ -14,10 +14,6 @@ An asynchronous python libary to get mediawiki content
 
 It requires Python 3.6 or above and aiohttp
 
-`pip3 install aiowiki`
-
-Development Version:
-
 `pip3 install git+https://github.com/Gelbpunkt/aiowiki`
 
 ## Quick start
@@ -28,12 +24,13 @@ wiki = aiowiki.Wiki.wikipedia("en") # We're using the alternate constructor for 
 await wiki.login("test", "pass1234") # Logging in (optional)
 
 pages = await wiki.get_random_pages(3) # get a list of random pages
+pages = await wiki.opensearch("Monty Python") # gets page objects by search
 
 page = wiki.get_page("aiowiki") # get a specific page
 
-print(await page.html) # print the pure page html
-print(await page.markdown) # print the pure page markdown (wiki code)
-print(await page.text) # print the page's text (library handles filtering of the HTML)
+print(await page.html()) # print the pure page html
+print(await page.markdown()) # print the pure page markdown (wiki code)
+print(await page.text()) # print the page's text (library handles filtering of the HTML)
 
 await page.edit("That's a nice lib!") # edit the page, automatically uses the logged in user or anonymous
 
