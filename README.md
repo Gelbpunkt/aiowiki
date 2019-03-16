@@ -2,6 +2,7 @@
 An asynchronous python libary to get mediawiki content
 
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/f634a400d4ed40ec8f51b1ce0f43fd5e)](https://www.codacy.com/app/Gelbpunkt/aiowiki?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Gelbpunkt/aiowiki&amp;utm_campaign=Badge_Grade)
+[![CodeFactor](https://www.codefactor.io/repository/github/gelbpunkt/aiowiki/badge)](https://www.codefactor.io/repository/github/gelbpunkt/aiowiki)
 [![BCH compliance](https://bettercodehub.com/edge/badge/Gelbpunkt/aiowiki?branch=master)](https://bettercodehub.com/)
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FGelbpunkt%2Faiowiki.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FGelbpunkt%2Faiowiki?ref=badge_shield)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
