@@ -15,9 +15,9 @@ jobs:
 
       # Download and cache dependencies
       - restore_cache:
-          keys: 
+          keys:
           - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact 
+          # fallback to using the latest cache if no exact
           # match is found
           - v1-dependencies-
 
@@ -30,15 +30,15 @@ jobs:
             pip install -U asynctest sphinx sphinxcontrib-asyncio codecov
             pip install -U -r requirements.txt
       - save_cache:
-          paths: 
+          paths:
             - ./venv
-          key: v1-dependencies-{{checksum "requirements.txt" }}
-        
+          key: v1-dependencies-{{checksum "requirements.txt" }
+
       # run tests
       - run:
           name: run tests
           command: |
-            . venv/bin/activate 
+            . venv/bin/activate
             PYTHONPATH=$PYTHONPATH:$(pwd)
             python3 ./setup.py sdist bdist_egg bdist_wheel
             rm -rf aiowiki
@@ -46,17 +46,17 @@ jobs:
             python3 tests/__init__.py
             coverage run tests/__init__.py
             codecov
-            
+
       # build docs
       - run:
           name: build documentation
-          command: | 
+          command: |
             . venv/bin/activate
             cd docs && make html
       - store_artifacts:
           path: dist
           destination: distributions
-          
+
       - store_artifacts:
           path: docs/_build
           destination: documentation
