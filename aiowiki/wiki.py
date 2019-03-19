@@ -65,6 +65,21 @@ class Wiki:
         await self.http.create_account(json)
         return True
 
+    async def userrights(
+        self, username: str, action: str, group: str):
+        """Update user rights of 'username', action: add or remove.
+        Can add or remove many groups with sep groups name by '|'.
+        ex: username: 'my_id', action: 'add', group: 'bureaucrat|bot' """
+        if action not in ["add","remove"]:
+            print("action must be 'add' or 'remove' only")
+            return False
+        json = {
+            "user": username,
+            action: group,
+        }
+        await self.http.userrights(json)
+        return True
+
     async def login(self, username: str, password: str):
         """Logs in to the wiki."""
         json = {"username": username, "password": password}
