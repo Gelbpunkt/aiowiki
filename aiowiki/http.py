@@ -47,6 +47,17 @@ class HTTPClient:
             raise CreateAccountError(json["createaccount"]["messagecode"])
         return True
 
+    async def userrights(self, json):
+        """Manage user rights"""
+        token = await self.get_token("userrights")
+        json["action"] = "userrights"
+        json["format"] = "json"
+        json["token"] = token
+        async with self.session.post(self.url, data=json) as r:
+            json = await r.json()
+        return True
+
+
     async def login(self, json):
         """Logs in to the wiki"""
         token = await self.get_token("login")
