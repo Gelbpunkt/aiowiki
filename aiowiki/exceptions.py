@@ -32,3 +32,18 @@ class EditError(Exception):
     """Exception raised when :meth:`~aiowiki.Page.edit` fails"""
 
     pass
+
+class NoSuchUserError(Exception):
+    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+
+    pass
+
+class InvalidGroupError(Exception):
+    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+
+    pass
+
+class UserRightsNotChangedError(Exception):
+    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+    
+    pass
