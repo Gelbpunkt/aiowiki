@@ -35,18 +35,18 @@ class EditError(Exception):
 
 
 class NoSuchUserError(Exception):
-    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+    """Exception raised when :meth:`~aiowiki.Wiki.userrights` fails because the target user does not exist"""
 
     pass
 
 
 class InvalidGroupError(Exception):
-    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+    """Exception raised when :meth:`~aiowiki.Wiki.userrights` fails because the selected group for adding to does not exist"""
 
     pass
 
 
 class UserRightsNotChangedError(Exception):
-    """Exception raised when :meth:`~aiowiki.userrights` fails"""
+    """Exception raised when :meth:`~aiowiki.Wiki.userrights` fails for several reasons"""
 
     pass
