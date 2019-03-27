@@ -33,17 +33,20 @@ class EditError(Exception):
 
     pass
 
+
 class NoSuchUserError(Exception):
     """Exception raised when :meth:`~aiowiki.userrights` fails"""
 
     pass
+
 
 class InvalidGroupError(Exception):
     """Exception raised when :meth:`~aiowiki.userrights` fails"""
 
     pass
 
+
 class UserRightsNotChangedError(Exception):
     """Exception raised when :meth:`~aiowiki.userrights` fails"""
-    
+
     pass
