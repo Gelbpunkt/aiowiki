@@ -55,21 +55,20 @@ class HTTPClient:
         json["token"] = token
         async with self.session.post(self.url, data=json) as r:
             json = await r.json()
-        if 'warnings' in json.keys():
-            raise InvalidGroupError(json['warnings']['userrights'])
+        if "warnings" in json.keys():
+            raise InvalidGroupError(json["warnings"]["userrights"])
         try:
-            if not json['userrights']["added"] and not json['userrights']["removed"]:
-                raise UserRightsNotChangedError('User rights are the same after this action Or current session is not allowed to change user rights')
+            if not json["userrights"]["added"] and not json["userrights"]["removed"]:
+                raise UserRightsNotChangedError(
+                    "User rights are the same after this action or current session is not allowed to change user rights"
+                )
 
         except KeyError:
-            if 'error' in json.keys():
-                if json['error']['code'] == 'nosuchuser':
+            if "error" in json.keys():
+                if json["error"]["code"] == "nosuchuser":
                     raise NoSuchUserError(json["error"]["info"])
-                print(json['error'])
-                
-                
-        return True
 
+        return True
 
     async def login(self, json):
         """Logs in to the wiki"""

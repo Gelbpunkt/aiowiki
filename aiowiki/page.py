@@ -1,5 +1,4 @@
 import re
-from .exceptions import *
 from collections import namedtuple
 
 

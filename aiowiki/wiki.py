@@ -1,7 +1,6 @@
 import aiohttp
 
 from .page import Page
-from .exceptions import *
 from .http import HTTPClient
 
 
@@ -72,7 +71,7 @@ class Wiki:
         if action not in ["add", "remove"]:
             raise ValueError("action must be 'add' or 'remove' only")
         json = {"user": username, action: group}
-        await self.http.userrights(json)
+        return await self.http.userrights(json)
 
     async def login(self, username: str, password: str):
         """Logs in to the wiki."""
