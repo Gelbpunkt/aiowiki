@@ -53,10 +53,8 @@ class HTTPClient:
         json["action"] = "userrights"
         json["format"] = "json"
         json["token"] = token
-        print("before: %s" %json)
         async with self.session.post(self.url, data=json) as r:
             json = await r.json()
-        print("after: %s" %json)
         if 'warnings' in json.keys():
             raise InvalidGroupError(json['warnings']['userrights'])
         try:
