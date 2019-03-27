@@ -53,8 +53,25 @@ class HTTPClient:
         json["action"] = "userrights"
         json["format"] = "json"
         json["token"] = token
+        print("before: %s" %json)
         async with self.session.post(self.url, data=json) as r:
             json = await r.json()
+        print("after: %s" %json)
+        if 'warnings' in json.keys():
+            raise InvalidGroupError(json['warnings']['userrights'])
+        try:
+            json['userrights']
+            if not json['userrights']["added"] and not json['userrights']["removed"]:
+                raise UserRightsNotChangedError('User rights are the same after this action Or current session is not allowed to change user rights')
+
+        except KeyError:
+            if 'error' in json.keys():
+                if json['error']['code'] == 'nosuchuser':
+                    raise NoSuchUserError(json["error"]["info"])
+                else:
+                    print(json['error'])
+                
+                
         return True
 
 
