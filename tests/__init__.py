@@ -79,7 +79,7 @@ class Test_Aiowiki(asynctest.TestCase):
         self.assertTrue("Nicolas Cage" in await page.text())
         self.assertTrue("{{pp-vandalism|small=yes}}" in await page.markdown())
         self.assertTrue(
-            "Nicolas Kim Coppola (born January 7, 1964)" in await page.markdown()
+            "Nicolas Kim Coppola (born January 7, 1964)" in await page.summary()
         )
         self.assertTrue((await page.urls()).view.startswith("https://en.wikipedia.org"))
         await wiki.close()
