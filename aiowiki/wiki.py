@@ -57,9 +57,10 @@ class Wiki:
             "username": username,
             "password": password,
             "retype": password,
-            "email": email,
             "realname": real_name,
         }
+        if email:
+            json["email"] = email
 
         await self.http.create_account(json)
         return True

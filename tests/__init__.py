@@ -70,7 +70,7 @@ class Test_Aiowiki(asynctest.TestCase):
     async def test_page_attrs(self):
         wiki = aiowiki.Wiki.wikipedia("en")
         page = wiki.get_page("Nicolas Cage")
-        self.assertTrue("Nicolas Cage" in await page.text)
+        self.assertTrue("Nicolas Cage" in await page.text())
         self.assertTrue(
             (await page.markdown()).startswith("{{pp-vandalism|small=yes}}")
         )
