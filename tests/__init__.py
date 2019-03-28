@@ -65,6 +65,7 @@ class Test_Aiowiki(asynctest.TestCase):
         async with aiowiki.Wiki(AIOWIKI_TEST_URL) as wiki:
             name = f"Test{randint(1, 100000000)}"
             await wiki.create_account(name, f"pass{randint(1, 1000000000)}")
+            await wiki.login(AIOWIKI_TEST_USERNAME, AIOWIKI_TEST_PASSWORD)
             await wiki.userrights(name, "add", "bureaucrat")
             await wiki.userrights(name, "remove", "bureaucrat")
 
