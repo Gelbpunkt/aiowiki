@@ -33,7 +33,13 @@ class Test_Aiowiki(asynctest.TestCase):
     async def test_page_edit(self):
         wiki = aiowiki.Wiki(AIOWIKI_TEST_URL)
         page = wiki.get_page("Spam")
-        await page.edit("Eggs & Ham")
+        try:
+            await page.edit("Eggs & Ham")
+        except aiowiki.EditError as e:
+            if not "action you have requested is limited to users in the group" in str(
+                e
+            ):
+                raise
         await wiki.close()
 
     @asynctest.skipIf(small_test, "No enviroment variables for testing set up")

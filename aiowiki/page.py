@@ -52,7 +52,7 @@ class Page:
 
     async def text(self):
         """The text of the page without HTML tags."""
-        raw_html = await self.html
+        raw_html = await self.html()
         return self._cleanhtml(raw_html)
 
     async def summary(self):
