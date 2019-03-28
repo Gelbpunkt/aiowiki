@@ -25,6 +25,9 @@ class Test_Aiowiki(asynctest.TestCase):
     async def test_working_by_wikipedia(self):
         wiki = aiowiki.Wiki.wikipedia("en")
         self.assertEqual(wiki.http.url, "https://en.wikipedia.org/w/api.php")
+        self.assertEqual(
+            repr(wiki), "<aiowiki.wiki.Wiki url=https://en.wikipedia.org/w/api.php>"
+        )
         page = wiki.get_page("Python (programming language)")
         await page.summary()  # should have a page, so it actually fetches there
         await wiki.close()
@@ -40,6 +43,9 @@ class Test_Aiowiki(asynctest.TestCase):
                 e
             ):
                 raise
+            else:
+                await wiki.login(AIOWIKI_TEST_USERNAME, AIOWIKI_TEST_PASSWORD)
+                await page.edit("Eggs & Ham")
         await wiki.close()
 
     @asynctest.skipIf(small_test, "No enviroment variables for testing set up")
@@ -51,15 +57,16 @@ class Test_Aiowiki(asynctest.TestCase):
         await wiki.close()
 
     @asynctest.skipIf(small_test, "No enviroment variables for testing set up")
-    async def test_create_account(self):
+    async def test_create_account_and_userrights(self):
         wiki = aiowiki.Wiki.wikipedia("en")
         with self.assertRaises(aiowiki.CreateAccountError):
             await wiki.create_account("Test1234", "pass1234")
         await wiki.close()
         async with aiowiki.Wiki(AIOWIKI_TEST_URL) as wiki:
-            await wiki.create_account(
-                f"Test{randint(1, 100000000)}", f"pass{randint(1, 1000000000)}"
-            )
+            name = f"Test{randint(1, 100000000)}"
+            await wiki.create_account(name, f"pass{randint(1, 1000000000)}")
+            await wiki.userrights(name, "add", "bureaucrat")
+            await wiki.userrights(name, "remove", "bureaucrat")
 
     async def test_random_pages(self):
         wiki = aiowiki.Wiki.wikipedia("en")
@@ -82,6 +89,8 @@ class Test_Aiowiki(asynctest.TestCase):
             "Nicolas Kim Coppola (born January 7, 1964)" in await page.summary()
         )
         self.assertTrue((await page.urls()).view.startswith("https://en.wikipedia.org"))
+        self.assertTrue(len(await page.media()) > 0)
+        self.assertTrue(repr(page) == "<aiowiki.page.Page title=Nicolas Cage>")
         await wiki.close()
 
 
